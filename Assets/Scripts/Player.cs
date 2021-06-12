@@ -7,11 +7,18 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float movementSpeed = 900.0f;
     private Rigidbody2D rb;
+    [SerializeField]
+    private RepairBar repairBar;
 
     public Rigidbody2D RigidBody
     {
         get { return rb; }
         set { rb = value; }
+    }
+
+    public RepairBar Repair
+    {
+        get { return repairBar; }
     }
     
     // Start is called before the first frame update
@@ -23,24 +30,26 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = Mathf.PingPong(Time.time / 10, 0.2f) - 0.1f;
+        if (rb)
+        {
+            rb.gravityScale = Mathf.PingPong(Time.time / 10, 0.2f) - 0.1f;
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            rb.AddForce(Vector2.up * movementSpeed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            rb.AddForce(Vector2.up * -movementSpeed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            rb.AddForce(Vector2.right * -movementSpeed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            rb.AddForce(Vector2.right * movementSpeed * Time.deltaTime);
+            if (Input.GetKey(KeyCode.W))
+            {
+                rb.AddForce(Vector2.up * movementSpeed * Time.deltaTime);
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                rb.AddForce(Vector2.up * -movementSpeed * Time.deltaTime);
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                rb.AddForce(Vector2.right * -movementSpeed * Time.deltaTime);
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                rb.AddForce(Vector2.right * movementSpeed * Time.deltaTime);
+            }
         }
     }
 

@@ -11,8 +11,10 @@ public class CollectableSpawner : MonoBehaviour
     private GameObject prefab;
     private Collider2D collider;
     [SerializeField]
-    private int maxCollectables = 3;
+    private int maxCollectables = 2;
     private int currentCollectables = 0;
+    private float spawnDelay = 0.0f;
+    private float spawnTimer = 0.0f;
 
     public int CurrentCollectables
     {
@@ -30,9 +32,18 @@ public class CollectableSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (spawnDelay > 0.0f)
+        {
+            spawnTimer += Time.deltaTime;
+            if (spawnTimer >= spawnDelay)
+            {
+                Spawn();
+            }
+        }
+
         if (currentCollectables < maxCollectables)
         {
-            Spawn();
+            spawnDelay = Random.Range(0.7f, 3.5f);
         }
     }
 
@@ -47,7 +58,7 @@ public class CollectableSpawner : MonoBehaviour
             validPosition = true;
             spawnX = Random.Range(collider.bounds.min.x, collider.bounds.max.x);
             spawnY = Random.Range(collider.bounds.min.y, collider.bounds.max.y);
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(new Vector2(spawnX, spawnY), 3.0f);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(new Vector2(spawnX, spawnY), 5.0f);
             foreach (Collider2D collider in colliders)
             {
                 if (collider.gameObject.tag == "Ship")
@@ -60,12 +71,13 @@ public class CollectableSpawner : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log(spawnX + ", " + spawnY);
+        
         GameObject newObject = Instantiate(prefab, new Vector2(spawnX, spawnY), Quaternion.identity);
         Cog cog = newObject.GetComponent<Cog>();
         cog.Spawn = this;
 
         currentCollectables++;
+        spawnTimer = 0.0f;
+        spawnDelay = 0.0f;
     }
 }

@@ -47,7 +47,7 @@ public class Rope : MonoBehaviour
 
     public void BreakRope()
     {
-        player.RigidBody.AddForce(player.transform.up * 1300.0f);
-        player.RigidBody.AddForce(player.transform.right * 1300.0f);
+        player.RigidBody.AddForce(player.transform.up * 750.0f);
+        player.RigidBody.AddForce(player.transform.right * 750.0f);
     }
 }
