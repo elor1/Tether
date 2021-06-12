@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class Tether : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private Rope parentRope;
+    private int durability = 10;
+    private SpriteRenderer renderer;
+
+    public Rope ParentRope
+    {
+        get { return parentRope; }
+        set { parentRope = value; }
+    }
+
     void Start()
     {
-        
+        renderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -17,10 +26,24 @@ public class Tether : MonoBehaviour
         rb.gravityScale = Random.Range(-0.01f, 0.01f);
     }
 
-    void OnCollisionEnter2D(Collision2D other)
+    public void OnHit()
     {
-        if (other.gameObject.tag == "Bullet")
+        durability--;
+        if (durability == 8)
         {
+            renderer.color = new Color(0.949f, 0.596f, 0.133f);
+        }
+        else if (durability == 5)
+        {
+            renderer.color = new Color(0.71f, 0.306f, 0.0f);
+        }
+        else if (durability == 2)
+        {
+            renderer.color = new Color(0.522f, 0.082f, 0.027f);
+        }
+        else if (durability == 0)
+        {
+            parentRope.BreakRope();
             Destroy(gameObject);
         }
     }

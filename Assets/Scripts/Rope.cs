@@ -29,6 +29,8 @@ public class Rope : MonoBehaviour
         for (int i = 0; i < links; i++)
         {
             GameObject link = Instantiate(tetherPrefab, transform);
+            Tether tether = link.GetComponent<Tether>();
+            tether.ParentRope = this;
             HingeJoint2D joint = link.GetComponent<HingeJoint2D>();
             joint.connectedBody = previousRB;
 
@@ -41,5 +43,11 @@ public class Rope : MonoBehaviour
                 player.ConnectTether(link.GetComponent<Rigidbody2D>());
             }
         }
+    }
+
+    public void BreakRope()
+    {
+        player.RigidBody.AddForce(player.transform.up * 1300.0f);
+        player.RigidBody.AddForce(player.transform.right * 1300.0f);
     }
 }

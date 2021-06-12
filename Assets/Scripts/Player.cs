@@ -5,9 +5,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float distanceFromTetherEnd = 0.3f;
     [SerializeField]
-    private float movementSpeed = 2.0f;
-
+    private float movementSpeed = 900.0f;
     private Rigidbody2D rb;
+
+    public Rigidbody2D RigidBody
+    {
+        get { return rb; }
+        set { rb = value; }
+    }
     
     // Start is called before the first frame update
     void Start()
@@ -23,19 +28,19 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            rb.AddForce(Vector2.up * movementSpeed);
+            rb.AddForce(Vector2.up * movementSpeed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            rb.AddForce(Vector2.up * -movementSpeed);
+            rb.AddForce(Vector2.up * -movementSpeed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            rb.AddForce(Vector2.right * -movementSpeed);
+            rb.AddForce(Vector2.right * -movementSpeed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            rb.AddForce(Vector2.right * movementSpeed);
+            rb.AddForce(Vector2.right * movementSpeed * Time.deltaTime);
         }
     }
 

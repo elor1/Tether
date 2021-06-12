@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Tether
+  - Fireball
+  - Ship
+  - Collectable
   layers:
   - Default
   - TransparentFX
@@ -45,8 +48,14 @@ TagManager:
   - name: Ship
     uniqueID: 1169000131
     locked: 0
+  - name: Collectable
+    uniqueID: 38988411
+    locked: 0
   - name: Player
     uniqueID: 3538477435
+    locked: 0
+  - name: Fireball
+    uniqueID: 3236626061
     locked: 0
   - name: Default
     uniqueID: 0
