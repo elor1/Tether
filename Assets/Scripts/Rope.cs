@@ -2,11 +2,14 @@
 
 public class Rope : MonoBehaviour
 {
-    public Rigidbody2D tetherStart;
-    public GameObject tetherPrefab;
-    public int links = 7;
-
-    public Player player;
+    [SerializeField]
+    private Rigidbody2D tetherStart;
+    [SerializeField]
+    private GameObject tetherPrefab;
+    [SerializeField]
+    private int links = 7;
+    [SerializeField]
+    private Player player;
 
     void Awake()
     {

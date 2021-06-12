@@ -221,6 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceFromTetherEnd: 0.3
+  movementSpeed: 2
 --- !u!50 &14903810
 Rigidbody2D:
   serializedVersion: 4
@@ -615,7 +616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tetherStart: {fileID: 690872596}
   tetherPrefab: {fileID: 8557598881307198620, guid: 58da30fdcc497a344b9b005f7332cbcc, type: 3}
-  links: 7
+  links: 15
   player: {fileID: 14903809}
 --- !u!1 &2068290020
 GameObject:
