@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     private float movementSpeed = 2.0f;
 
     private Rigidbody2D rb;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +18,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = Mathf.PingPong(Time.time / 10, 0.2f) - 0.1f;
+
         if (Input.GetKey(KeyCode.W))
         {
             rb.AddForce(Vector2.up * movementSpeed);
