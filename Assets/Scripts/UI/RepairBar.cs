@@ -9,6 +9,7 @@ public class RepairBar : MonoBehaviour
     private Slider slider;
     private int cogsNeeded = 5;
     private int currentCogs = 0;
+    private AudioSource audioSource;
 
     public int CurrentCogs
     {
@@ -19,6 +20,7 @@ public class RepairBar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         UpdateSlider();
     }
 
@@ -27,6 +29,11 @@ public class RepairBar : MonoBehaviour
     {
         if (currentCogs == cogsNeeded)
         {
+            if (audioSource && !GameManager.isOver)
+            {
+                audioSource.Play();
+            }
+
             GameObject[] tetherLinks = GameObject.FindGameObjectsWithTag("Tether");
             foreach (var link in tetherLinks)
             {

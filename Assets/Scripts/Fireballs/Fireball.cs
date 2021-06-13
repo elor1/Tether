@@ -11,6 +11,7 @@ public class Fireball : MonoBehaviour
     private float maxLife = 2.0f;
     private Spawner spawner;
     private bool hasHit = false;
+    private AudioSource audioSource;
 
     public Spawner Spawn
     {
@@ -23,11 +24,18 @@ public class Fireball : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         maxLife = Random.Range(0.7f, 2.3f);
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (hasHit && !audioSource.isPlaying)
+        {
+            spawner.Manager.CurrentFireballs--;
+            Destroy(gameObject);
+        }
+
         rb.AddForce(transform.right * speed * Time.deltaTime);
 
         if (lifeTimer >= maxLife && !GetComponent<Renderer>().isVisible)
@@ -69,6 +77,11 @@ public class Fireball : MonoBehaviour
                 }
 
                 hasHit = true;
+
+                if (audioSource && !GameManager.isOver)
+                {
+                    audioSource.Play();
+                }
             }
         }
 
@@ -78,6 +91,10 @@ public class Fireball : MonoBehaviour
             tether.OnHit();
 
             hasHit = true;
+            if (audioSource && !audioSource.isPlaying && !GameManager.isOver)
+            {
+                audioSource.Play();
+            }
         }
     }
 }
