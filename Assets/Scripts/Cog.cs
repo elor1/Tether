@@ -51,6 +51,12 @@ public class Cog : MonoBehaviour
             if (player)
             {
                 player.Repair.CurrentCogs++;
+
+                Score score = player.GetComponent<Score>();
+                if (score)
+                {
+                    score.AddScore(3);
+                }
             }
 
             spawner.CurrentCollectables--;

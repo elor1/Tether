@@ -50,6 +50,7 @@ public class Rope : MonoBehaviour
     {
         if (!isBroken)
         {
+            player.Game.EndGame();
             player.RigidBody.AddForce(player.transform.up * 750.0f);
             player.RigidBody.AddForce(player.transform.right * 750.0f);
             isBroken = true;
