@@ -30,7 +30,7 @@ public class Fireball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (hasHit && !audioSource.isPlaying)
+        if (hasHit && !audioSource.isPlaying && !GameManager.isOver)
         {
             spawner.Manager.CurrentFireballs--;
             Destroy(gameObject);
