@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tether : MonoBehaviour
 {
     private Rope parentRope;
-    private int durability = 10;
+    private int durability = 7;
     private SpriteRenderer renderer;
     [SerializeField]
     private Color startColor;
@@ -40,15 +40,15 @@ public class Tether : MonoBehaviour
     public void OnHit()
     {
         durability--;
-        if (durability == 8)
+        if (durability == 5)
         {
             renderer.color = new Color(0.949f, 0.596f, 0.133f);
         }
-        else if (durability == 5)
+        else if (durability == 3)
         {
             renderer.color = new Color(0.71f, 0.306f, 0.0f);
         }
-        else if (durability == 2)
+        else if (durability == 1)
         {
             renderer.color = new Color(0.522f, 0.082f, 0.027f);
         }

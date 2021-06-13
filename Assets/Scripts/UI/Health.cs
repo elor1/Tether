@@ -20,7 +20,13 @@ public class Health : MonoBehaviour
         get { return currentHealth; }
         set { currentHealth = value; }
     }
-    
+
+    public int MaxHealth
+    {
+        get { return maxHealth; }
+        set { maxHealth = value; }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,13 +36,17 @@ public class Health : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
-            currentHealth = 0;
-        }
-        else if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject)
+            {
+                Player player = playerObject.GetComponent<Player>();
+                if (player)
+                {
+                    player.Game.EndGame();
+                }
+            }
         }
 
         for (int i = 0; i < hearts.Length; i++)

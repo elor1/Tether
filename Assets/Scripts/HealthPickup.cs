@@ -53,7 +53,13 @@ public class HealthPickup : MonoBehaviour
                 Health health = player.GetComponent<Health>();
                 if (health)
                 {
-                    health.CurrentHealth++;
+                    health.CurrentHealth = health.MaxHealth;
+                }
+
+                Score score = other.GetComponent<Score>();
+                if (score)
+                {
+                    score.AddScore(1);
                 }
             }
 

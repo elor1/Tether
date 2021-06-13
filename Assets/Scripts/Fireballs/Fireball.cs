@@ -10,6 +10,7 @@ public class Fireball : MonoBehaviour
     private float lifeTimer = 0.0f;
     private float maxLife = 2.0f;
     private Spawner spawner;
+    private bool hasHit = false;
 
     public Spawner Spawn
     {
@@ -32,6 +33,20 @@ public class Fireball : MonoBehaviour
         if (lifeTimer >= maxLife && !GetComponent<Renderer>().isVisible)
         {
             //Add to score
+            if (!hasHit)
+            {
+                GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+                if (playerObject)
+                {
+                    Player player = playerObject.GetComponent<Player>();
+                    if (player)
+                    {
+                        Score score = player.GetComponent<Score>();
+                        score.AddScore(5);
+                    }
+                }
+            }
+
             spawner.Manager.CurrentFireballs--;
             Destroy(gameObject);
         }
@@ -52,6 +67,8 @@ public class Fireball : MonoBehaviour
                 {
                     health.CurrentHealth--;
                 }
+
+                hasHit = true;
             }
         }
 
@@ -59,6 +76,8 @@ public class Fireball : MonoBehaviour
         {
             Tether tether = other.GetComponent<Tether>();
             tether.OnHit();
+
+            hasHit = true;
         }
     }
 }

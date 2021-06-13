@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField]
     private RepairBar repairBar;
+    [SerializeField]
+    private GameManager gameManager;
 
     public Rigidbody2D RigidBody
     {
@@ -19,6 +21,12 @@ public class Player : MonoBehaviour
     public RepairBar Repair
     {
         get { return repairBar; }
+    }
+
+    public GameManager Game
+    {
+        get { return gameManager; }
+        set { gameManager = value; }
     }
     
     // Start is called before the first frame update
@@ -35,7 +43,7 @@ public class Player : MonoBehaviour
             Application.Quit();
         }
 
-        if (rb)
+        if (rb && !GameManager.isOver)
         {
             rb.gravityScale = Mathf.PingPong(Time.time / 10, 0.2f) - 0.1f;
 
