@@ -9,7 +9,6 @@ public class SpawnManager : MonoBehaviour
     private int currentFireballs = 0;
     [SerializeField]
     private int maxFireballs = 3;
-
     private float previousTime = 0.0f;
 
     public int CurrentFireballs
@@ -27,20 +26,9 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.realtimeSinceStartup >= 90.0f && previousTime < 90.0f)
+        if (Time.realtimeSinceStartup - previousTime > 30.0f)
         {
-            maxFireballs++;
-        }
-        else if (Time.realtimeSinceStartup >= 60.0f && previousTime < 60.0f)
-        {
-            maxFireballs++;
-        }
-        else if (Time.realtimeSinceStartup >= 40.0f && previousTime < 40.0f)
-        {
-            maxFireballs++;
-        }
-        else if (Time.realtimeSinceStartup >= 25.0f && previousTime < 25.0f)
-        {
+            previousTime = Time.realtimeSinceStartup;
             maxFireballs++;
         }
 
@@ -49,7 +37,5 @@ public class SpawnManager : MonoBehaviour
             int random = Random.Range(0, spawners.Count - 1);
             spawners[random].Spawn(this);
         }
-
-        previousTime = Time.realtimeSinceStartup;
     }
 }

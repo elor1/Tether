@@ -30,6 +30,15 @@ public class Health : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (currentHealth < 0)
+        {
+            currentHealth = 0;
+        }
+        else if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
         for (int i = 0; i < hearts.Length; i++)
         {
             if (i < currentHealth)

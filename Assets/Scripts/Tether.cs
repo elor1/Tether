@@ -61,6 +61,9 @@ public class Tether : MonoBehaviour
 
     public void ResetColour()
     {
-        renderer.color = startColor;
+        if (!parentRope.IsBroken())
+        {
+            renderer.color = startColor;
+        }
     }
 }

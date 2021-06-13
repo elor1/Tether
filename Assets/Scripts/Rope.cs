@@ -10,6 +10,7 @@ public class Rope : MonoBehaviour
     private int links = 7;
     [SerializeField]
     private Player player;
+    private bool isBroken = false;
 
     void Awake()
     {
@@ -47,7 +48,16 @@ public class Rope : MonoBehaviour
 
     public void BreakRope()
     {
-        player.RigidBody.AddForce(player.transform.up * 750.0f);
-        player.RigidBody.AddForce(player.transform.right * 750.0f);
+        if (!isBroken)
+        {
+            player.RigidBody.AddForce(player.transform.up * 750.0f);
+            player.RigidBody.AddForce(player.transform.right * 750.0f);
+            isBroken = true;
+        }
+    }
+
+    public bool IsBroken()
+    {
+        return isBroken;
     }
 }
