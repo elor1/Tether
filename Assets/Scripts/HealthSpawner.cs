@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectableSpawner : MonoBehaviour
+public class HealthSpawner : MonoBehaviour
 {
     [SerializeField]
     private GameObject ship;
@@ -11,7 +11,7 @@ public class CollectableSpawner : MonoBehaviour
     private GameObject prefab;
     private Collider2D collider;
     [SerializeField]
-    private int maxCollectables = 2;
+    private int maxCollectables = 1;
     private int currentCollectables = 0;
     private float spawnDelay = 0.0f;
     private float spawnTimer = 0.0f;
@@ -33,7 +33,7 @@ public class CollectableSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Time.realtimeSinceStartup - previousTime > 30.0f)
+        if (Time.realtimeSinceStartup - previousTime > 35.0f)
         {
             previousTime = Time.realtimeSinceStartup;
             maxCollectables++;
@@ -50,9 +50,8 @@ public class CollectableSpawner : MonoBehaviour
 
         if (currentCollectables < maxCollectables)
         {
-            spawnDelay = Random.Range(0.7f, 3.5f);
+            spawnDelay = Random.Range(5.0f, 10.0f);
         }
-        
     }
 
     void Spawn()
@@ -70,11 +69,7 @@ public class CollectableSpawner : MonoBehaviour
             Collider2D[] colliders = Physics2D.OverlapCircleAll(new Vector2(spawnX, spawnY), 5.0f);
             foreach (Collider2D collider in colliders)
             {
-                if (collider.gameObject.tag == "Ship")
-                {
-                    validPosition = false;
-                }
-                if (collider.gameObject.tag == "Collectable")
+                if (collider.gameObject.tag == "Ship" || collider.gameObject.tag == "Collectable")
                 {
                     validPosition = false;
                 }
@@ -86,10 +81,10 @@ public class CollectableSpawner : MonoBehaviour
                 return;
             }
         }
-        
+
         GameObject newObject = Instantiate(prefab, new Vector2(spawnX, spawnY), Quaternion.identity);
-        Cog cog = newObject.GetComponent<Cog>();
-        cog.Spawn = this;
+        HealthPickup health = newObject.GetComponent<HealthPickup>();
+        health.Spawn = this;
 
         currentCollectables++;
         spawnTimer = 0.0f;

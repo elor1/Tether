@@ -7,11 +7,19 @@ public class Tether : MonoBehaviour
     private Rope parentRope;
     private int durability = 10;
     private SpriteRenderer renderer;
+    [SerializeField]
+    private Color startColor;
 
     public Rope ParentRope
     {
         get { return parentRope; }
         set { parentRope = value; }
+    }
+
+    public int Durability
+    {
+        get { return durability; }
+        set { durability = value; }
     }
 
     void Start()
@@ -23,7 +31,10 @@ public class Tether : MonoBehaviour
     void Update()
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.gravityScale = Random.Range(-0.01f, 0.01f);
+        if (rb)
+        {
+            rb.gravityScale = Random.Range(-0.01f, 0.01f);
+        }
     }
 
     public void OnHit()
@@ -45,6 +56,14 @@ public class Tether : MonoBehaviour
         {
             parentRope.BreakRope();
             Destroy(gameObject);
+        }
+    }
+
+    public void ResetColour()
+    {
+        if (!parentRope.IsBroken())
+        {
+            renderer.color = startColor;
         }
     }
 }

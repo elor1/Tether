@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cog : MonoBehaviour
+public class HealthPickup : MonoBehaviour
 {
     [SerializeField]
     private float speed = 50.0f;
     private Rigidbody2D rb;
     private float lifeTimer = 0.0f;
     private float maxLife = 2.0f;
-    private CollectableSpawner spawner;
+    private HealthSpawner spawner;
 
-    public CollectableSpawner Spawn
+    public HealthSpawner Spawn
     {
         get { return spawner; }
         set { spawner = value; }
@@ -50,7 +50,11 @@ public class Cog : MonoBehaviour
             Player player = other.GetComponent<Player>();
             if (player)
             {
-                player.Repair.CurrentCogs++;
+                Health health = player.GetComponent<Health>();
+                if (health)
+                {
+                    health.CurrentHealth++;
+                }
             }
 
             spawner.CurrentCollectables--;

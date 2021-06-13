@@ -8,6 +8,7 @@ public class Fireball : MonoBehaviour
     private float speed = 900.0f;
     private Rigidbody2D rb;
     private float lifeTimer = 0.0f;
+    private float maxLife = 2.0f;
     private Spawner spawner;
 
     public Spawner Spawn
@@ -20,6 +21,7 @@ public class Fireball : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        maxLife = Random.Range(0.7f, 2.3f);
     }
 
     // Update is called once per frame
@@ -27,7 +29,7 @@ public class Fireball : MonoBehaviour
     {
         rb.AddForce(transform.right * speed * Time.deltaTime);
 
-        if (lifeTimer >= 2.0f && !GetComponent<Renderer>().isVisible)
+        if (lifeTimer >= maxLife && !GetComponent<Renderer>().isVisible)
         {
             //Add to score
             spawner.Manager.CurrentFireballs--;
@@ -42,7 +44,15 @@ public class Fireball : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             //Lose life
-            Debug.Log("Hit player");
+            Player player = other.GetComponent<Player>();
+            if (player)
+            {
+                Health health = player.GetComponent<Health>();
+                if (health)
+                {
+                    health.CurrentHealth--;
+                }
+            }
         }
 
         if (other.gameObject.tag == "Tether")
