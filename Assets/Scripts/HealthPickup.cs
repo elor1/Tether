@@ -54,7 +54,7 @@ public class HealthPickup : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && !GameManager.isOver)
         {
             Player player = other.GetComponent<Player>();
             if (player)
