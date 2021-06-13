@@ -10,6 +10,8 @@ public class Cog : MonoBehaviour
     private float lifeTimer = 0.0f;
     private float maxLife = 2.0f;
     private CollectableSpawner spawner;
+    private AudioSource audioSource;
+    private bool isCollected = false;
 
     public CollectableSpawner Spawn
     {
@@ -22,11 +24,18 @@ public class Cog : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         maxLife = Random.Range(0.7f, 4.0f);
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isCollected && !audioSource.isPlaying)
+        {
+            spawner.CurrentCollectables--;
+            Destroy(gameObject);
+        }
+
         if (rb)
         {
             rb.gravityScale = Mathf.PingPong(Time.time / 6, 0.1f) - 0.05f;
@@ -57,10 +66,14 @@ public class Cog : MonoBehaviour
                 {
                     score.AddScore(3);
                 }
-            }
 
-            spawner.CurrentCollectables--;
-            Destroy(gameObject);
+                if (audioSource && !GameManager.isOver)
+                {
+                    audioSource.Play();
+                }
+
+                isCollected = true;
+            }
         }
     }
 }

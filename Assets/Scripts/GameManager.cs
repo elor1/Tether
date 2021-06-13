@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     private Text scoreText;
     [SerializeField]
     private Text highScoreText;
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioSource musicSource;
 
     void Awake()
     {
@@ -29,6 +32,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         HUD.SetActive(true);
         EndGameUI.SetActive(false);
     }
@@ -41,6 +45,16 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
+        if (audioSource && !isOver)
+        {
+            audioSource.Play();
+        }
+
+        if (musicSource)
+        {
+            musicSource.Stop();
+        }
+
         isOver = true;
         Score playerScore = player.GetComponent<Score>();
         if (playerScore)
